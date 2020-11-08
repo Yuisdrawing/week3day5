@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>jQuery To-Do App</title>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary{display:block;}audio,canvas,video{display:inline-block;}audio:not([controls]){display:none;height:0;}[hidden]{display:none;}html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;}a:focus{outline:thin dotted;}a:active,a:hover{outline:0;}h1{font-size:2em;}abbr[title]{border-bottom:1px dotted;}b,strong{font-weight:700;}dfn{font-style:italic;}mark{background:#ff0;color:#000;}code,kbd,pre,samp{font-family:monospace, serif;font-size:1em;}pre{white-space:pre-wrap;word-wrap:break-word;}q{quotes:\201C \201D \2018 \2019;}small{font-size:80%;}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline;}sup{top:-.5em;}sub{bottom:-.25em;}img{border:0;}svg:not(:root){overflow:hidden;}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em;}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0;}button,input{line-height:normal;}button,html input[type=button],/* 1 */
+    input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer;}button[disabled],input[disabled]{cursor:default;}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0;}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box;}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none;}textarea{overflow:auto;vertical-align:top;}table{border-collapse:collapse;border-spacing:0;}body,figure{margin:0;}legend,button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
+
+    * { box-sizing: border-box; }
+
+    .visually-hidden:not(:focus):not(:active) { position: absolute; width: 1px; height: 1px; margin: -1px;border: 0;padding: 0;white-space: nowrap;clip-path: inset(100%);clip: rect(00 0 0);overflow: hidden;}
+
+    body {
+      font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    }
+
+    h1 {
+      font-weight: 500;
+      line-height: 1.1;
+    }
+
+    button, input, select[multiple], textarea {
+      background-image: none;
+    }
+
+    input, button, select, textarea {
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+    }
+
+    button, input {
+      line-height: normal;
+    }
+
+    button, input, select, textarea {
+      margin: 0;
+      font-family: inherit;
+      font-size: 100%;
+    }
+
+    ul, ol {
+      margin-top: 0;
+      margin-bottom: 10px;
+      padding: 0;
+      list-style: none;
+    }
+
+    ul li {
+      cursor: move;
+    }
+
+    a {
+      color: #428bca;
+      text-decoration: none;
+    }
+
+    main {
+      padding: 30px;
+      margin-bottom: 30px;
+      font-size: 21px;
+      font-weight: 200;
+      line-height: 2.1;
+      color: inherit;
+      background-color: #eee;
+    }
+
+    main h1 {
+      font-size: 63px;
+      line-height: 1;
+      color: inherit;
+    }
+
+    .container {
+      max-width: 750px;
+      padding: 0 15px;
+      margin: auto;
+    }
+
+    .page-header {
+      padding-bottom: 10px;
+      margin: 40px 0 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    input {
+      height: 45px;
+      padding: 10px 16px;
+      font-size: 18px;
+      line-height: 1.3;
+      border-radius: 6px;
+    }
+
+    .form-control {
+      display: block;
+      width: 100%;
+      height: 35px;
+      padding: 6px 12px;
+      font-size: 14px;
+      line-height: 1.4;
+      color: #555;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+      transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    }
+
+    span {
+      margin-right: 10px;
+    }
+
+    .alert {
+      color: #b94a48;
+      background-color: #f2dede;
+      border: 1px solid #eed3d7;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+
+    .text-muted {
+      color: #999;
+    }  
+  </style>
+</head>
+<body>
+
+<main>
+  <div class="container">
+    
+    <div class="page-header"> 
+      <h1>jQuery To-Do App</h1>
+    </div>
+
+    <form>
+      <label for="toDoItem" class="visually-hidden">Add a to-do item</label>
+      <input id="toDoItem" class="form-control" type="text" placeholder="Add an item...">
+    </form>
+
+    <ul>
+      <!-- To do items get added dynamically here -->
+    </ul>
+  </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>
+
+// INSERT CODE HERE
+
+// Wait for the dcument to be loaded, before running any of our code!
+$(document).ready(function() {
+  // Set up an event listener to wait for the user to submit the form.
+  $('form').on('submit', function(event) {
+
+    // On form submit, by default, it will reload the page. Instead, we pass a parameter, representing the event object provided by jQuery, and use that parameter to prevent the default behavior.
+    event.preventDefault();
+
+    // Go find the user input field on the page, get the current value of it, and save that value to a new variable.
+    const userInput = $('#toDoItem').val();
+
+    // Check if the user has submitted anything, or if it is just an empty string. If they submitted, do some good shit, but if not, alert them that they did it wrong.
+    if (userInput !== '') {
+
+      // Now that we have captured the value of the user's input, we set the value of the input field to be empty again, so that they can type a new thing!
+      $('#toDoItem').val('');
+
+      // Let's use our to-do item to create a new HTML element as a string, and save that to a variable so we can use it!
+      const newListItem = `<li><span class='fa fa-square-o'></span>${userInput}</li>`;
+
+      // Go find the ul on our page, and use the .append() method to add the li we created as the lst child of the ul element:
+      $('ul').append(newListItem);
+    } else {
+      alert("No, stupid, you did it wrong");
+    }
+  })
+// We create an event listener for when the user clicks to check off an li (a done to-do item!), but because the li elements are added to the page later, after our code runs and sets up all these event listeners, we attach the event lister to the ul instead (which is on the page when it loads). The ul wil hear the click thanks to the event bubbling / propagating up the DOM tree. We add a parameter to the .on() method to specify where the event (the click heard by the ul) will occur (the li):
+  $('ul').on('click', 'li', function() {
+
+    // We now have the li that was clicked on, so we have to go find the span inside it using the class of .fa that is on all the spans:
+    const $checkbox = $(this).find('.fa');
+    // Now we remove the class tht was on the span, and add a new class which is going to give us a checked-off checkbox instead:
+
+    $checkbox
+      .toggleClass('fa-square-o fa-check-square-o');
+      // The bottom code will make the checked elements turn grey. text-muted ties back to line 127 in CSS:
+      $(this).toggleClass('text-muted');
+
+      // Using the bottom code will also work but will not be able to click again to revert it back to unchecked state like toggleClass. Will have to manually put conditions on and on in order for it to work:
+    // $checkbox
+    //   .removeClass('fa-square-o')
+    //   .addClass('fa-check-square-o');
+
+  })
+})
+
+</script>
+</body>
+</html>
